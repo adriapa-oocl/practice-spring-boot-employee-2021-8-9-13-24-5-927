@@ -66,12 +66,11 @@ public class EmployeeServiceTest {
     void should_return_specific_employee_when_findByGender_given_employee_gender() {
         //given
         given(employeeRepository.getEmployees()).willReturn(testEmployees);
-        List<Employee> mockEmployee = testEmployees;
 
         //when
-        List<Employee> actualEmployees = employeeService.findByGender("Male");
+        List<Employee> actualEmployees = employeeService.findByGender("male");
 
         //then
-        assertEquals(5,actualEmployees.stream().map(Employee::getEmployeeGender).filter(employeeGender -> employeeGender.equals("Male")));
+        assertEquals(4,actualEmployees.stream().map(Employee::getEmployeeGender).filter(employeeGender -> employeeGender.equals("male")).count());
     }
 }
