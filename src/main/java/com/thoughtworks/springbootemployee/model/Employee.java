@@ -1,54 +1,54 @@
 package com.thoughtworks.springbootemployee.model;
 
 public class Employee {
-    private Integer id;
-    private String name;
-    private Integer age;
-    private String gender;
-    private Integer salary;
+    private Integer employeeId;
+    private String employeeName;
+    private Integer employeeAge;
+    private String employeeGender;
+    private Integer employeeSalary;
 
-    public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.salary = salary;
+    public Employee(Integer employeeId, String employeeName, Integer employeeAge, String employeeGender, Integer employeeSalary) {
+        this.employeeId = employeeId;
+        this.employeeName = employeeName;
+        this.employeeAge = employeeAge;
+        this.employeeGender = employeeGender;
+        this.employeeSalary = employeeSalary;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getEmployeeId() {
+        return employeeId;
     }
 
-    public String getName() {
-        return name;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public Integer getAge() {
-        return age;
+    public Integer getEmployeeAge() {
+        return employeeAge;
     }
 
-    public String getGender() {
-        return gender;
+    public String getEmployeeGender() {
+        return employeeGender;
     }
 
-    public Integer getSalary() {
-        return salary;
+    public Integer getEmployeeSalary() {
+        return employeeSalary;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setEmployeeAge(Integer employeeAge) {
+        this.employeeAge = employeeAge;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setEmployeeGender(String employeeGender) {
+        this.employeeGender = employeeGender;
     }
 
-    public void setSalary(Integer salary) {
-        this.salary = salary;
+    public void setEmployeeSalary(Integer employeeSalary) {
+        this.employeeSalary = employeeSalary;
     }
 }
 

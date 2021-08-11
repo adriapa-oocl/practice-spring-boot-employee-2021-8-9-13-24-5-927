@@ -12,13 +12,15 @@ import java.util.List;
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
-//    private List<Employee> employees = new ArrayList<>();
-
     public EmployeeService(EmployeeRepository employeeRepository) {
        this.employeeRepository = employeeRepository;
     }
 
     public List<Employee> getAllEmployees() {
         return employeeRepository.getEmployees();
+    }
+
+    public Employee findById(Integer employeeId){
+        return null;
     }
 }

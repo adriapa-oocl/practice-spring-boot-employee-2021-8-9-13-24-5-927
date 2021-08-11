@@ -16,19 +16,6 @@ public class EmployeesController {
     private EmployeeService employeeService;
     private List<Employee> employees = new ArrayList<>();
 
-    public EmployeesController(EmployeeService employeeService) {
-
-    }
-
-//    public EmployeesController() {
-//        employees.add(new Employee(1,"Lara",21,"female",1000));
-//        employees.add(new Employee(2,"Cedie",21,"male",500));
-//        employees.add(new Employee(3,"Kitz",22,"male",1000));
-//        employees.add(new Employee(4,"Robert",23,"male",500));
-//        employees.add(new Employee(5,"Kyle",24,"male",1000));
-//        employees.add(new Employee(6,"Angelo",25,"male",500));
-//    }
-
     @GetMapping
     public List<Employee> getAllEmployees(){
         return employeeService.getAllEmployees();
@@ -37,19 +24,14 @@ public class EmployeesController {
 
     @GetMapping(path = "/{employeeId}")
     public Employee findById(@PathVariable Integer employeeId){
-        return employees
-                .stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
-                .orElse(null)
-                ;
+        return employeeService.findById(employeeId);
     }
 
     @GetMapping(params = {"gender"})
     public Employee findByGender(@RequestParam("gender") String employeeGender){
         return employees
                 .stream()
-                .filter(employee -> employee.getGender().equals(employeeGender))
+                .filter(employee -> employee.getEmployeeGender().equals(employeeGender))
                 .findFirst()
                 .orElse(null)
                 ;
@@ -66,7 +48,7 @@ public class EmployeesController {
 
     @PostMapping
     public void addEmployee(@RequestBody Employee employee){
-        Employee newEmployee = new Employee(employees.size()+1,employee.getName(),employee.getAge(),employee.getGender(),employee.getSalary());
+        Employee newEmployee = new Employee(employees.size()+1,employee.getEmployeeName(),employee.getEmployeeAge(),employee.getEmployeeGender(),employee.getEmployeeSalary());
         employees.add(newEmployee);
     }
 
@@ -74,7 +56,7 @@ public class EmployeesController {
     public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeInfo){
         return employees
                 .stream()
-                .filter(employee -> employee.getId().equals(employeeId))
+                .filter(employee -> employee.getEmployeeId().equals(employeeId))
                 .findFirst()
                 .map(employee -> updateEmployeeInfo(employee, employeeInfo))
                 .get()
@@ -82,21 +64,20 @@ public class EmployeesController {
     }
 
     private Employee updateEmployeeInfo(Employee employee, Employee employeeInfo) {
-        if (employeeInfo.getName() != null){
-            employee.setName(employeeInfo.getName());
+        if (employeeInfo.getEmployeeName() != null){
+            employee.setEmployeeName(employeeInfo.getEmployeeName());
         }
-        if (employeeInfo.getAge() != null){
-            employee.setAge(employeeInfo.getAge());
+        if (employeeInfo.getEmployeeAge() != null){
+            employee.setEmployeeAge(employeeInfo.getEmployeeAge());
         }
-        if (employeeInfo.getGender() != null){
-            employee.setGender(employeeInfo.getGender());
+        if (employeeInfo.getEmployeeGender() != null){
+            employee.setEmployeeGender(employeeInfo.getEmployeeGender());
         }
-        if (employeeInfo.getSalary() != null){
-            employee.setSalary(employeeInfo.getSalary());
+        if (employeeInfo.getEmployeeSalary() != null){
+            employee.setEmployeeSalary(employeeInfo.getEmployeeSalary());
         }
         return employee;
     }
-
 
     @DeleteMapping(path = "/{employeeId}")
     public String deleteEmployee(@PathVariable Integer employeeId){
