@@ -34,11 +34,7 @@ public class EmployeesController {
 
     @GetMapping(params = {"pageIndex", "pageSize"})
     public List<Employee> getEmployeesByPagination(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
-        return employees
-                .stream()
-                .skip((pageIndex - 1) * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
+        return employeeService.getEmployeesByPagination(pageIndex, pageSize);
     }
 
     @PostMapping

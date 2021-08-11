@@ -73,4 +73,17 @@ public class EmployeeServiceTest {
         //then
         assertEquals(4,actualEmployees.stream().map(Employee::getEmployeeGender).filter(employeeGender -> employeeGender.equals("male")).count());
     }
+
+    @Test
+    void should_return_three_employee_per_list_when_getListByPagination_given_pageIndex_is_1_and_pageSize_is_3() {
+        //given
+        given(employeeRepository.getEmployees()).willReturn(testEmployees);
+        int mockCount = 3;
+
+        //when
+        int actualCount = employeeService.getEmployeesByPagination(1, 3).size();
+
+        //then
+        assertEquals(mockCount, actualCount);
+    }
 }
