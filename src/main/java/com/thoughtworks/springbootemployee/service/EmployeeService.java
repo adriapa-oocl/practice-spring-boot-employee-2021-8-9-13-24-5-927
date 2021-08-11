@@ -62,6 +62,15 @@ public class EmployeeService {
                 ;
     }
 
+    public Employee removeEmployee(Integer employeeId){
+        Employee removeEmployee = employeeRepository.getEmployees().stream()
+                                        .filter(employee -> employee.getEmployeeId()
+                                        .equals(employeeId))
+                                        .findFirst().orElse(null);
+        employeeRepository.getEmployees().remove(removeEmployee);
+        return removeEmployee;
+    }
+
     private Employee updateEmployeeInfo(Employee employee, Employee employeeInfo) {
         if (employeeInfo.getEmployeeName() != null){
             employee.setEmployeeName(employeeInfo.getEmployeeName());
@@ -77,4 +86,5 @@ public class EmployeeService {
         }
         return employee;
     }
+
 }
