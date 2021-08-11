@@ -53,6 +53,28 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Integer employeeId, Employee employeeInfo){
-        return null;
+        return getAllEmployees()
+                .stream()
+                .filter(employee -> employee.getEmployeeId().equals(employeeId))
+                .findFirst()
+                .map(employee -> updateEmployeeInfo(employee, employeeInfo))
+                .get()
+                ;
+    }
+
+    private Employee updateEmployeeInfo(Employee employee, Employee employeeInfo) {
+        if (employeeInfo.getEmployeeName() != null){
+            employee.setEmployeeName(employeeInfo.getEmployeeName());
+        }
+        if (employeeInfo.getEmployeeAge() != null){
+            employee.setEmployeeAge(employeeInfo.getEmployeeAge());
+        }
+        if (employeeInfo.getEmployeeGender() != null){
+            employee.setEmployeeGender(employeeInfo.getEmployeeGender());
+        }
+        if (employeeInfo.getEmployeeSalary() != null){
+            employee.setEmployeeSalary(employeeInfo.getEmployeeSalary());
+        }
+        return employee;
     }
 }
