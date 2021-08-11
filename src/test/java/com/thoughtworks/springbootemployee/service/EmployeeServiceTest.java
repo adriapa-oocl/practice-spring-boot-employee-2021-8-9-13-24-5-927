@@ -38,7 +38,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void should_return_all_employees_when_getAllEmployees_given_all_employees(){
+    void should_return_all_employees_when_getAllEmployees_given_all_employees(){
         //given
         given(employeeRepository.getEmployees()).willReturn(mockEmployees);
 
@@ -50,4 +50,16 @@ public class EmployeeServiceTest {
         assertIterableEquals(mockEmployees, actualEmployees);
     }
 
+    @Test
+    void should_return_specific_employee_when_findById_given_employee_id() {
+        //given
+        given(employeeRepository.getEmployees()).willReturn(mockEmployees);
+
+        //when
+        Employee mockEmployee = new Employee(1, "Cedie", 23, "Male", 5000);
+        Employee actualEmployee = employeeService.findById(1);
+
+        //then
+        assertEquals(mockEmployee.getEmployeeId(), actualEmployee.getEmployeeId());
+    }
 }
