@@ -28,13 +28,8 @@ public class EmployeesController {
     }
 
     @GetMapping(params = {"gender"})
-    public Employee findByGender(@RequestParam("gender") String employeeGender){
-        return employees
-                .stream()
-                .filter(employee -> employee.getEmployeeGender().equals(employeeGender))
-                .findFirst()
-                .orElse(null)
-                ;
+    public List<Employee> findByGender(@RequestParam("gender") String employeeGender){
+        return employeeService.findByGender(employeeGender);
     }
 
     @GetMapping(params = {"pageIndex", "pageSize"})

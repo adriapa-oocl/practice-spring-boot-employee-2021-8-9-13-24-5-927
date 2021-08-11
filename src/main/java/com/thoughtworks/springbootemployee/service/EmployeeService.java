@@ -28,4 +28,8 @@ public class EmployeeService {
                 .orElse(null)
                 ;
     }
+
+    public List<Employee> findByGender(String employeeGender){
+        return null;
+    }
 }
