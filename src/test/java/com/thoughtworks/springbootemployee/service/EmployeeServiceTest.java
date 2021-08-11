@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -85,5 +86,25 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(mockCount, actualCount);
+    }
+
+    @Test
+    void should_return_new_employee_when_addEmployee_given_employee_info() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        given(employeeRepository.getEmployees()).willReturn(employees);
+        Employee newEmployee = new Employee(){{
+            setEmployeeName("David");
+            setEmployeeAge(25);
+            setEmployeeGender("male");
+            setEmployeeSalary(1000);
+        }
+        };
+
+        //when
+        employeeService.addEmployee(newEmployee);
+
+        //then
+        assertEquals(1, employees.size());
     }
 }

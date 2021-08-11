@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -38,9 +39,9 @@ public class EmployeesController {
     }
 
     @PostMapping
-    public void addEmployee(@RequestBody Employee employee){
-        Employee newEmployee = new Employee(employees.size()+1,employee.getEmployeeName(),employee.getEmployeeAge(),employee.getEmployeeGender(),employee.getEmployeeSalary());
-        employees.add(newEmployee);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee addEmployee(@RequestBody Employee employeeInfo){
+        return employeeService.addEmployee(employeeInfo);
     }
 
     @PutMapping(path = "/{employeeId}")
