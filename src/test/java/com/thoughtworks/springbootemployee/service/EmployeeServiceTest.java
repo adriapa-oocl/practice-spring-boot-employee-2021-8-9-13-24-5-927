@@ -107,4 +107,19 @@ public class EmployeeServiceTest {
         //then
         assertEquals(1, employees.size());
     }
+
+    @Test
+    void should_update_existing_employee_when_updateEmployee_given_employee_info() {
+        //given
+        given(employeeRepository.getEmployees()).willReturn(testEmployees);
+        Employee updateEmployee = new Employee(){{
+            setEmployeeAge(22);
+        }};
+
+        //when
+        Employee updatedEmployeeInfo = employeeService.updateEmployee(1, updateEmployee);
+
+        //then
+        assertEquals(updatedEmployeeInfo.getEmployeeGender(), updateEmployee.getEmployeeAge());
+    }
 }
