@@ -27,4 +27,8 @@ public class CompanyService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Company getAllEmployeesByCompanyId(Integer companyId) {
+        return null;
+    }
 }
