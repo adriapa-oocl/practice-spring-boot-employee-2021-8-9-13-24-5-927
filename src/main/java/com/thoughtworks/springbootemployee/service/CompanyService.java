@@ -58,7 +58,9 @@ public class CompanyService {
     }
 
     public Company removeCompany(Integer companyId) {
-        return null;
+        Optional<Company> removeCompany = companyRepository.findById(companyId);
+        companyRepository.deleteById(companyId);
+        return removeCompany.orElse(null);
     }
 
 }
