@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -36,6 +37,28 @@ public class CompanyService {
 
     public Company addCompany(Company companyInfo) {
         return companyRepository.save(companyInfo);
+    }
+
+    public Company updateCompany(Integer companyId, Company companyInfo) {
+        Company updateCompany = companyRepository
+                                .findById(companyId)
+                                .map(company -> updateCompanyInfo(company, companyInfo))
+                                .get();
+        return companyRepository.save(updateCompany);
+    }
+
+    private Company updateCompanyInfo(Company company, Company companyInfo) {
+        if (companyInfo.getCompanyName() != null){
+            company.setCompanyName(companyInfo.getCompanyName());
+        }
+        if (!companyInfo.getEmployees().isEmpty() && companyInfo.getEmployees() != null){
+            company.setEmployees(companyInfo.getEmployees());
+        }
+        return company;
+    }
+
+    public Company removeCompany(Integer companyId) {
+        return null;
     }
 
 }
