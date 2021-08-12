@@ -112,7 +112,6 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employee_when_findById_given_employee_id() throws Exception {
         int id = testEmployees.get(0).getId();
-        //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
@@ -124,12 +123,22 @@ public class EmployeeIntegrationTest {
 
     @Test
     void should_return_employees_when_findByGender_given_employee_gender() throws Exception {
-        String gender = testEmployees.get(0).getGender();
-        //when
+        String gender = "male";
         mockMvc.perform(MockMvcRequestBuilders.get("/employees").param("gender", gender)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(6)));
+    }
+
+    @Test
+    void should_return_three_employee_per_list_when_getListByPagination_given_pageIndex_is_1_and_pageSize_is_3() throws Exception {
+        int pageSize = 3;
+        int pageIndex = 1;
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
+                .param("pageIndex", String.valueOf(pageIndex)).param("pageSize", String.valueOf(pageSize))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(3)));
     }
 
 }
