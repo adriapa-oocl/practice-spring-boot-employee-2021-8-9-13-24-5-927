@@ -21,6 +21,10 @@ public class CompanyService {
     }
 
     public Company findById(Integer companyId) {
-        return null;
+        return getAllCompanies()
+                .stream()
+                .filter(company -> company.getCompanyId().equals(companyId))
+                .findFirst()
+                .orElse(null);
     }
 }
