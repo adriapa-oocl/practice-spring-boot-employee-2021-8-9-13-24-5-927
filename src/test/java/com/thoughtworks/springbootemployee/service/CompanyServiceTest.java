@@ -127,35 +127,28 @@ public class CompanyServiceTest {
         assertEquals(updatedCompanyInfo.getCompanyName(), updateCompany.getCompanyName());
     }
 
-    //    @Test
-//    void should_update_existing_employee_when_updateEmployee_given_employee_info() {
-//        //given
-//        given(retiringEmployeeRepository.getEmployees()).willReturn(testEmployees);
-//        Employee updateEmployee = new Employee(){{
-//            setEmployeeAge(22);
-//        }};
-//
-//        //when
-//        Employee updatedEmployeeInfo = retiringEmployeeService.updateEmployee(1, updateEmployee);
-//
-//        //then
-//        assertEquals(updatedEmployeeInfo.getEmployeeAge(), updateEmployee.getEmployeeAge());
-//    }
-//
-//    @Test
-//    void should_remove_existing_employee_when_removeEmployee_given_employee_id() {
-//        //given
-//        List<Employee> employees = new ArrayList<>();
-//        employees.add(new Employee(1,"Lara",21,"female",1000));
-//        employees.add(new Employee(2,"Cedie",21,"male",500));
-//        employees.add(new Employee(3,"Kitz",22,"male",1000));
-//        given(retiringEmployeeRepository.getEmployees()).willReturn(employees);
-//
-//        //when
-//        Employee deletedEmployee = retiringEmployeeService.removeEmployee(1);
-//
-//        //then
-//        assertNotNull(deletedEmployee);
-//        assertEquals(2, employees.size());
-//    }
+    @Test
+    void should_remove_existing_company_when_removeCompany_given_company_id() {
+        //given
+        List<Company> companies = new ArrayList<>();
+        companies.add(new Company(1,"OOCL", 200, Arrays.asList(
+                new Employee(1,"Lara",21,"female",1000),
+                new Employee(3,"Kitz",22,"male",1000),
+                new Employee(4,"Robert",23,"male",500),
+                new Employee(5,"Kyle",24,"male",1000),
+                new Employee(6,"Angelo",25,"male",500))));
+        companies.add(new Company(2, "DPMCP", 100, Arrays.asList(
+                new Employee(2,"Cedie",27,"male",500),
+                new Employee(7,"Jesse",25,"male",500),
+                new Employee(8,"David",25,"male",500))));
+        given(companyRepository.getCompanies()).willReturn(companies);
+
+        //when
+        Company deletedCompany = companyService.removeCompany(2);
+
+        //then
+        assertNotNull(deletedCompany);
+        assertEquals(1, companies.size());
+    }
+
 }
