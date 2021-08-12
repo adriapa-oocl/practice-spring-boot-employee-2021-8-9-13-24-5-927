@@ -57,4 +57,16 @@ public class CompanyServiceTest {
         assertEquals(testCompanies.size(), actualCompanies.size());
         assertIterableEquals(testCompanies, actualCompanies);
     }
+
+    @Test
+    void should_return_specific_company_when_findById_given_company_id() {
+        //given
+        given(companyRepository.getCompanies()).willReturn(testCompanies);
+
+        //when
+        Company actualCompany = companyService.findById(2);
+
+        //then
+        assertEquals(testCompanies.get(1).getCompanyId(), actualCompany.getCompanyId());
+    }
 }

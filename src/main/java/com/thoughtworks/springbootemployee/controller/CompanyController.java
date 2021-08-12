@@ -28,4 +28,8 @@ public class CompanyController {
         return companyService.getAllCompanies();
     }
 
+    @GetMapping(path = "/{companyId}")
+    public Company findById(@PathVariable Integer companyId){
+        return companyService.findById(companyId);
+    }
 }
