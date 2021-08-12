@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.integration;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,22 +27,29 @@ public class EmployeeIntegrationTest {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    private List<Employee> testEmployees;
+
+    @BeforeEach
+    public void setup(){
+        testEmployees = Arrays.asList
+                        (new Employee(2,"Kitz",22,"male",10000),
+                        (new Employee(3,"Lara",21,"female",10000)),
+                        (new Employee(34,"Robert",23,"male",10000)),
+                        (new Employee(65,"Angelo",21,"male",10000)),
+                        (new Employee(66,"Kyle",23,"male",10000))
+                );
+    }
+
     @Test
     void should_return_all_employees_when_getAllEmployees() throws Exception {
-        //given
-        Employee employee = new Employee(1, "Linne", 20, "female", 9999);
-        employeeRepository.save(employee);
-
         //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").isNumber())
-                .andExpect(jsonPath("$[0].name").value("Linne"))
-                .andExpect(jsonPath("$[0].age").value(20))
-                .andExpect(jsonPath("$[0].gender").value("female"))
-                .andExpect(jsonPath("$[0].salary").value(9999));
-
-        //then
+                .andExpect(jsonPath("$[0].name").value("Kitz"))
+                .andExpect(jsonPath("$[0].age").value(22))
+                .andExpect(jsonPath("$[0].gender").value("male"))
+                .andExpect(jsonPath("$[0].salary").value(10000));
     }
 
     @Test
@@ -93,6 +104,32 @@ public class EmployeeIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void should_return_employee_when_findById_given_employee_id() throws Exception {
+        int id = testEmployees.get(0).getId();
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("Kitz"))
+                .andExpect(jsonPath("$.age").value(22))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(10000));
+    }
+
+    @Test
+    void should_return_employees_when_findByGender_given_employee_gender() throws Exception {
+        int id = testEmployees.get(0).getId();
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("Kitz"))
+                .andExpect(jsonPath("$.age").value(22))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(10000));
     }
 
 }
