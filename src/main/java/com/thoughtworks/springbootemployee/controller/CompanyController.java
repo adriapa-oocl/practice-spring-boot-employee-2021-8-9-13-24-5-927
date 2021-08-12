@@ -31,35 +31,15 @@ public class CompanyController {
         return companyService.getAllCompanies();
     }
 
-//    @GetMapping(path = "/{companyId}")
-//    public Company findById(@PathVariable Integer companyId){
-//        return retiringCompanyService.findById(companyId);
-//    }
-
     @GetMapping(path = "/{companyId}")
     public Company findById(@PathVariable Integer companyId){
         return companyService.findById(companyId);
     }
 
-//    @GetMapping(path = "/{companyId}/employees")
-//    public List<Employee> getAllEmployeesByCompanyId(@PathVariable Integer companyId){
-//        return retiringCompanyService.getAllEmployeesByCompanyId(companyId);
-//    }
-
     @GetMapping(path = "/{companyId}/employees")
     public List<Employee> getAllEmployeesByCompanyId(@PathVariable Integer companyId){
         return companyService.getAllEmployeesByCompanyId(companyId);
     }
-
-//    @GetMapping(params = {"pageIndex", "pageSize"})
-//    public List<Company> getCompaniesByPagination(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
-//        return retiringCompanyService.getCompaniesByPagination(pageIndex, pageSize);
-//    }
-
-//    @GetMapping(params = {"pageIndex", "pageSize"})
-//    public List<Company> getCompaniesByPagination(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
-//        return retiringCompanyService.getCompaniesByPagination(pageIndex, pageSize);
-//    }
 
     @GetMapping(params = {"pageIndex", "pageSize"})
     public List<Company> getCompaniesByPagination(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
@@ -69,7 +49,7 @@ public class CompanyController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Company addCompany(@RequestBody Company companyInfo){
-        return retiringCompanyService.addCompany(companyInfo);
+        return companyService.addCompany(companyInfo);
     }
 
     @PutMapping(path = "/{companyId}")

@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class CompanyServiceTest {
+public class RetiringCompanyServiceTest {
     @InjectMocks
     private RetiringCompanyService retiringCompanyService;
 
@@ -27,7 +27,7 @@ public class CompanyServiceTest {
 
     private List<Company> testCompanies = new ArrayList<>();
 
-    public CompanyServiceTest() {
+    public RetiringCompanyServiceTest() {
     }
 
     @BeforeEach

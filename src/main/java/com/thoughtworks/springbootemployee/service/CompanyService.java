@@ -34,4 +34,8 @@ public class CompanyService {
         return companyRepository.findAll(PageRequest.of(pageIndex-1,pageSize)).getContent();
     }
 
+    public Company addCompany(Company companyInfo) {
+        return companyRepository.save(companyInfo);
+    }
+
 }
