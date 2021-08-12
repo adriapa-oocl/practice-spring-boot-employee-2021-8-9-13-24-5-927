@@ -2,7 +2,6 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.RetiringEmployeeRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,7 +24,7 @@ public class RetiringEmployeeService {
     public Employee findById(Integer employeeId){
         return getAllEmployees()
                 .stream()
-                .filter(employee -> employee.getEmployeeId().equals(employeeId))
+                .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
                 .orElse(null)
                 ;
@@ -34,7 +33,7 @@ public class RetiringEmployeeService {
     public List<Employee> findByGender(String employeeGender){
         return getAllEmployees()
                 .stream()
-                .filter(employee -> employee.getEmployeeGender().equals(employeeGender))
+                .filter(employee -> employee.getGender().equals(employeeGender))
                 .collect(Collectors.toList());
     }
 
@@ -49,7 +48,7 @@ public class RetiringEmployeeService {
     public Employee addEmployee(Employee employeeInfo) {
 //        return retiringEmployeeRepository.save(employeeInfo);
         Employee newEmployee = new Employee(retiringEmployeeRepository.getEmployees().size()+1,
-                employeeInfo.getEmployeeName(), employeeInfo.getEmployeeAge(), employeeInfo.getEmployeeGender(), employeeInfo.getEmployeeSalary());
+                employeeInfo.getName(), employeeInfo.getAge(), employeeInfo.getGender(), employeeInfo.getSalary());
         retiringEmployeeRepository.getEmployees().add(newEmployee);
         return newEmployee;
     }
@@ -57,7 +56,7 @@ public class RetiringEmployeeService {
     public Employee updateEmployee(Integer employeeId, Employee employeeInfo){
         return getAllEmployees()
                 .stream()
-                .filter(employee -> employee.getEmployeeId().equals(employeeId))
+                .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
                 .map(employee -> updateEmployeeInfo(employee, employeeInfo))
                 .get()
@@ -66,7 +65,7 @@ public class RetiringEmployeeService {
 
     public Employee removeEmployee(Integer employeeId){
         Employee removeEmployee = retiringEmployeeRepository.getEmployees().stream()
-                                        .filter(employee -> employee.getEmployeeId()
+                                        .filter(employee -> employee.getId()
                                         .equals(employeeId))
                                         .findFirst().orElse(null);
         retiringEmployeeRepository.getEmployees().remove(removeEmployee);
@@ -74,17 +73,17 @@ public class RetiringEmployeeService {
     }
 
     private Employee updateEmployeeInfo(Employee employee, Employee employeeInfo) {
-        if (employeeInfo.getEmployeeName() != null){
-            employee.setEmployeeName(employeeInfo.getEmployeeName());
+        if (employeeInfo.getName() != null){
+            employee.setName(employeeInfo.getName());
         }
-        if (employeeInfo.getEmployeeAge() != null){
-            employee.setEmployeeAge(employeeInfo.getEmployeeAge());
+        if (employeeInfo.getAge() != null){
+            employee.setAge(employeeInfo.getAge());
         }
-        if (employeeInfo.getEmployeeGender() != null){
-            employee.setEmployeeGender(employeeInfo.getEmployeeGender());
+        if (employeeInfo.getGender() != null){
+            employee.setGender(employeeInfo.getGender());
         }
-        if (employeeInfo.getEmployeeSalary() != null){
-            employee.setEmployeeSalary(employeeInfo.getEmployeeSalary());
+        if (employeeInfo.getSalary() != null){
+            employee.setSalary(employeeInfo.getSalary());
         }
         return employee;
     }

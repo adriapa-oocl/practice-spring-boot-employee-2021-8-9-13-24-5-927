@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.repository.RetiringEmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willReturn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,8 +22,14 @@ public class EmployeeServiceTest {
     @InjectMocks
     private RetiringEmployeeService retiringEmployeeService;
 
+    @InjectMocks
+    private EmployeeService employeeService;
+
     @Mock
     private RetiringEmployeeRepository retiringEmployeeRepository;
+
+    @Mock
+    private EmployeeRepository employeeRepository;
 
     private List<Employee> testEmployees;
 
@@ -39,10 +47,10 @@ public class EmployeeServiceTest {
     @Test
     void should_return_all_employees_when_getAllEmployees_given_all_employees(){
         //given
-        given(retiringEmployeeRepository.getEmployees()).willReturn(testEmployees);
+        given(employeeRepository.findAll()).willReturn(testEmployees);
 
         //when
-        List<Employee> actualEmployees = retiringEmployeeService.getAllEmployees();
+        List<Employee> actualEmployees = employeeService.getAllEmployees();
 
         //then
         assertEquals(testEmployees.size(), actualEmployees.size());
@@ -59,7 +67,7 @@ public class EmployeeServiceTest {
         Employee actualEmployee = retiringEmployeeService.findById(2);
 
         //then
-        assertEquals(mockEmployee.getEmployeeId(), actualEmployee.getEmployeeId());
+        assertEquals(mockEmployee.getId(), actualEmployee.getId());
     }
 
     @Test
@@ -71,7 +79,7 @@ public class EmployeeServiceTest {
         List<Employee> actualEmployees = retiringEmployeeService.findByGender("male");
 
         //then
-        assertEquals(4,actualEmployees.stream().map(Employee::getEmployeeGender).filter(employeeGender -> employeeGender.equals("male")).count());
+        assertEquals(4,actualEmployees.stream().map(Employee::getGender).filter(employeeGender -> employeeGender.equals("male")).count());
         assertEquals(4,actualEmployees.size());
     }
 
@@ -94,10 +102,10 @@ public class EmployeeServiceTest {
         List<Employee> employees = new ArrayList<>();
         given(retiringEmployeeRepository.getEmployees()).willReturn(employees);
         Employee newEmployee = new Employee(){{
-            setEmployeeName("David");
-            setEmployeeAge(25);
-            setEmployeeGender("male");
-            setEmployeeSalary(1000);
+            setName("David");
+            setAge(25);
+            setGender("male");
+            setSalary(1000);
         }
         };
 
@@ -106,22 +114,43 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(1, employees.size());
-        assertEquals(25, employees.get(0).getEmployeeAge());
+        assertEquals(25, employees.get(0).getAge());
     }
+
+//    @Test
+//    void should_return_new_employee_when_addEmployee_given_employee() {
+//        //given
+//        List<Employee> employees = new ArrayList<>();
+//        given(employeeRepository.findAll()).willReturn(employees);
+//        Employee newEmployee = new Employee(){{
+//            setName("David");
+//            setAge(25);
+//            setGender("male");
+//            setSalary(1000);
+//        }
+//        };
+//
+//        //when
+//        employeeService.addEmployee(newEmployee);
+//
+//        //then
+//        assertEquals(1, employees.size());
+//        assertEquals(25, employees.get(0).getAge());
+//    }
 
     @Test
     void should_update_existing_employee_when_updateEmployee_given_employee_info() {
         //given
         given(retiringEmployeeRepository.getEmployees()).willReturn(testEmployees);
         Employee updateEmployee = new Employee(){{
-            setEmployeeAge(22);
+            setAge(22);
         }};
 
         //when
         Employee updatedEmployeeInfo = retiringEmployeeService.updateEmployee(1, updateEmployee);
 
         //then
-        assertEquals(updatedEmployeeInfo.getEmployeeAge(), updateEmployee.getEmployeeAge());
+        assertEquals(updatedEmployeeInfo.getAge(), updateEmployee.getAge());
     }
 
     @Test
