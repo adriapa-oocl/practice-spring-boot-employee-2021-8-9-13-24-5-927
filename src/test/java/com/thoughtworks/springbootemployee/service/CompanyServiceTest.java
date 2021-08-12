@@ -94,4 +94,22 @@ public class CompanyServiceTest {
         //then
         assertEquals(mockCount, actualCount);
     }
+
+    @Test
+    void should_return_new_company_when_addCompany_given_company_info() {
+        //given
+        List<Company> companies = new ArrayList<>();
+        given(companyRepository.getCompanies()).willReturn(companies);
+        Company newCompany = new Company(){{
+            setCompanyName("EDI");
+            setEmployeesNumber(10);
+            setCompanyEmployees(Arrays.asList(new Employee(9, "Joanna", 25, "female", 1000)));
+        }};
+
+        //when
+        companyService.addCompany(newCompany);
+
+        //then
+        assertEquals("EDI", newCompany.getCompanyName());
+    }
 }

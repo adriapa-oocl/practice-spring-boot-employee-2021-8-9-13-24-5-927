@@ -6,6 +6,7 @@ import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,5 +41,13 @@ public class CompanyService {
                 .skip((pageIndex - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    public Company addCompany(Company companyInfo) {
+        Company newCompany = new Company(companyRepository.getCompanies().size()+1,
+                companyInfo.getCompanyName(), companyInfo.getEmployeesNumber(), companyInfo.getEmployees());
+        companyRepository.getCompanies().add(newCompany);
+        return newCompany;
+
     }
 }
