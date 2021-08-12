@@ -9,58 +9,59 @@ import javax.persistence.Id;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer employeeId;
-    private String employeeName;
-    private Integer employeeAge;
-    private String employeeGender;
-    private Integer employeeSalary;
+    private Integer id;
+    private String name;
+    private Integer age;
+    private String gender;
+    private Integer salary;
+    private Integer companyId;
 
-    public Employee(Integer employeeId, String employeeName, Integer employeeAge, String employeeGender, Integer employeeSalary) {
-        this.employeeId = employeeId;
-        this.employeeName = employeeName;
-        this.employeeAge = employeeAge;
-        this.employeeGender = employeeGender;
-        this.employeeSalary = employeeSalary;
+    public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
     }
 
     public Employee() {
 
     }
 
-    public Integer getEmployeeId() {
-        return employeeId;
+    public Integer getId() {
+        return id;
     }
 
-    public String getEmployeeName() {
-        return employeeName;
+    public String getName() {
+        return name;
     }
 
-    public Integer getEmployeeAge() {
-        return employeeAge;
+    public Integer getAge() {
+        return age;
     }
 
-    public String getEmployeeGender() {
-        return employeeGender;
+    public String getGender() {
+        return gender;
     }
 
-    public Integer getEmployeeSalary() {
-        return employeeSalary;
+    public Integer getSalary() {
+        return salary;
     }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setEmployeeAge(Integer employeeAge) {
-        this.employeeAge = employeeAge;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public void setEmployeeGender(String employeeGender) {
-        this.employeeGender = employeeGender;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public void setEmployeeSalary(Integer employeeSalary) {
-        this.employeeSalary = employeeSalary;
+    public void setSalary(Integer salary) {
+        this.salary = salary;
     }
 }
 
