@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
@@ -31,5 +32,13 @@ public class CompanyService {
 
     public List<Employee> getAllEmployeesByCompanyId(Integer companyId) {
         return findById(companyId).getEmployees();
+    }
+
+    public List<Company> getCompaniesByPagination(Integer pageIndex, Integer pageSize) {
+        return getAllCompanies()
+                .stream()
+                .skip((pageIndex - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }

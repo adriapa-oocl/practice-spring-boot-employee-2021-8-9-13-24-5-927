@@ -81,4 +81,17 @@ public class CompanyServiceTest {
         //then
         assertEquals(testCompanies.get(1).getEmployees(), actualEmployeeList);
     }
+
+    @Test
+    void should_return_one_company_per_list_when_getCompaniesByPagination_given_pageIndex_is_1_and_pageSize_is_1() {
+        //given
+        given(companyRepository.getCompanies()).willReturn(testCompanies);
+        int mockCount = 1;
+
+        //when
+        int actualCount = companyService.getCompaniesByPagination(1, 1).size();
+
+        //then
+        assertEquals(mockCount, actualCount);
+    }
 }
