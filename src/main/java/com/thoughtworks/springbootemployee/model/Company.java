@@ -1,50 +1,44 @@
 package com.thoughtworks.springbootemployee.model;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Company {
-    private Integer companyId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String companyName;
-    private Integer employeesNumber;
-    private List<Employee> companyEmployees = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companyId")
+    private List<Employee> employees;
 
-    public Company(Integer companyId, String companyName, Integer employeesNumber, List<Employee> companyEmployees) {
-        this.companyId = companyId;
+    public Company(Integer id, String companyName, List<Employee> employees) {
+        this.id = id;
         this.companyName = companyName;
-        this.employeesNumber = employeesNumber;
-        this.companyEmployees = companyEmployees;
+        this.employees = employees;
     }
 
     public Company(){
 
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Integer getId() {
+        return id;
     }
 
     public String getCompanyName() {
         return companyName;
     }
 
-    public Integer getEmployeesNumber() {
-        return employeesNumber;
-    }
-
     public List<Employee> getEmployees() {
-        return companyEmployees;
+        return employees;
     }
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
-    public void setEmployeesNumber(Integer employeesNumber) {
-        this.employeesNumber = employeesNumber;
-    }
-
-    public void setCompanyEmployees(List<Employee> companyEmployees) {
-        this.companyEmployees = companyEmployees;
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 }
