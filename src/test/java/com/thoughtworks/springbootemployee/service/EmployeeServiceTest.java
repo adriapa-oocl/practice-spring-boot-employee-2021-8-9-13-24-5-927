@@ -117,27 +117,6 @@ public class EmployeeServiceTest {
         assertEquals(25, employees.get(0).getAge());
     }
 
-//    @Test
-//    void should_return_new_employee_when_addEmployee_given_employee() {
-//        //given
-//        List<Employee> employees = new ArrayList<>();
-//        given(employeeRepository.findAll()).willReturn(employees);
-//        Employee newEmployee = new Employee(){{
-//            setName("David");
-//            setAge(25);
-//            setGender("male");
-//            setSalary(1000);
-//        }
-//        };
-//
-//        //when
-//        employeeService.addEmployee(newEmployee);
-//
-//        //then
-//        assertEquals(1, employees.size());
-//        assertEquals(25, employees.get(0).getAge());
-//    }
-
     @Test
     void should_update_existing_employee_when_updateEmployee_given_employee_info() {
         //given
