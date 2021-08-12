@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,7 +37,9 @@ public class EmployeeIntegrationTest {
                         (new Employee(3,"Lara",21,"female",10000)),
                         (new Employee(34,"Robert",23,"male",10000)),
                         (new Employee(65,"Angelo",21,"male",10000)),
-                        (new Employee(66,"Kyle",23,"male",10000))
+                        (new Employee(66,"Kyle",23,"male",10000)),
+                        (new Employee(67,"Jesse",25,"male",10000)),
+                        (new Employee(97,"David",25,"male",10000))
                 );
     }
 
@@ -121,15 +124,12 @@ public class EmployeeIntegrationTest {
 
     @Test
     void should_return_employees_when_findByGender_given_employee_gender() throws Exception {
-        int id = testEmployees.get(0).getId();
+        String gender = testEmployees.get(0).getGender();
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees").param("gender", gender)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").isNumber())
-                .andExpect(jsonPath("$.name").value("Kitz"))
-                .andExpect(jsonPath("$.age").value(22))
-                .andExpect(jsonPath("$.gender").value("male"))
-                .andExpect(jsonPath("$.salary").value(10000));
+                .andExpect(jsonPath("$.*", hasSize(6)));
     }
 
 }
