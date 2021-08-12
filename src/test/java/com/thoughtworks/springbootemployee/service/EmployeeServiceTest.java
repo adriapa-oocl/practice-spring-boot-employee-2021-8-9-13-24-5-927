@@ -73,6 +73,7 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(4,actualEmployees.stream().map(Employee::getEmployeeGender).filter(employeeGender -> employeeGender.equals("male")).count());
+        assertEquals(4,actualEmployees.size());
     }
 
     @Test
@@ -106,6 +107,7 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(1, employees.size());
+        assertEquals(25, employees.get(0).getEmployeeAge());
     }
 
     @Test

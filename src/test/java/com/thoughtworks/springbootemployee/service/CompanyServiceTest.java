@@ -76,9 +76,9 @@ public class CompanyServiceTest {
         given(companyRepository.getCompanies()).willReturn(testCompanies);
 
         //when
-        Company actualCompany = companyService.getAllEmployeesByCompanyId(2);
+        List<Employee> actualEmployeeList = companyService.getAllEmployeesByCompanyId(2);
 
         //then
-        assertEquals(testCompanies.get(0).getEmployeesList(), actualCompany.getEmployeesList());
+        assertEquals(testCompanies.get(1).getEmployees(), actualEmployeeList);
     }
 }

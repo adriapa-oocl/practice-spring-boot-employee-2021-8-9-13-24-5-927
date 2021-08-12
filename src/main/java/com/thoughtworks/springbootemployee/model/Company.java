@@ -6,13 +6,13 @@ public class Company {
     private Integer companyId;
     private String companyName;
     private Integer employeesNumber;
-    private List<Employee> employeesList;
+    private List<Employee> companyEmployees;
 
-    public Company(Integer companyId, String companyName, Integer employeesNumber, List<Employee> employeesList) {
+    public Company(Integer companyId, String companyName, Integer employeesNumber, List<Employee> companyEmployees) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.employeesNumber = employeesNumber;
-        this.employeesList = employeesList;
+        this.companyEmployees = companyEmployees;
     }
 
     public Integer getCompanyId() {
@@ -27,7 +27,7 @@ public class Company {
         return employeesNumber;
     }
 
-    public List<Employee> getEmployeesList() {
-        return employeesList;
+    public List<Employee> getEmployees() {
+        return companyEmployees;
     }
 }
