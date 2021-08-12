@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -112,4 +111,51 @@ public class CompanyServiceTest {
         //then
         assertEquals("EDI", newCompany.getCompanyName());
     }
+
+    @Test
+    void should_update_existing_company_when_updateCompany_given_company_info() {
+        //given
+        given(companyRepository.getCompanies()).willReturn(testCompanies);
+        Company updateCompany = new Company(){{
+            setCompanyName("OOCL-DPMCP");
+        }};
+
+        //when
+        Company updatedCompanyInfo = companyService.updateCompany(1, updateCompany);
+
+        //then
+        assertEquals(updatedCompanyInfo.getCompanyName(), updateCompany.getCompanyName());
+    }
+
+    //    @Test
+//    void should_update_existing_employee_when_updateEmployee_given_employee_info() {
+//        //given
+//        given(retiringEmployeeRepository.getEmployees()).willReturn(testEmployees);
+//        Employee updateEmployee = new Employee(){{
+//            setEmployeeAge(22);
+//        }};
+//
+//        //when
+//        Employee updatedEmployeeInfo = retiringEmployeeService.updateEmployee(1, updateEmployee);
+//
+//        //then
+//        assertEquals(updatedEmployeeInfo.getEmployeeAge(), updateEmployee.getEmployeeAge());
+//    }
+//
+//    @Test
+//    void should_remove_existing_employee_when_removeEmployee_given_employee_id() {
+//        //given
+//        List<Employee> employees = new ArrayList<>();
+//        employees.add(new Employee(1,"Lara",21,"female",1000));
+//        employees.add(new Employee(2,"Cedie",21,"male",500));
+//        employees.add(new Employee(3,"Kitz",22,"male",1000));
+//        given(retiringEmployeeRepository.getEmployees()).willReturn(employees);
+//
+//        //when
+//        Employee deletedEmployee = retiringEmployeeService.removeEmployee(1);
+//
+//        //then
+//        assertNotNull(deletedEmployee);
+//        assertEquals(2, employees.size());
+//    }
 }

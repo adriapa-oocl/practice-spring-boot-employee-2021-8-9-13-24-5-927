@@ -50,4 +50,36 @@ public class CompanyService {
         return newCompany;
 
     }
+
+    public Company updateCompany(Integer companyId, Company companyInfo) {
+        return getAllCompanies()
+                .stream()
+                .filter(company -> company.getCompanyId().equals(companyId))
+                .findFirst()
+                .map(company -> updateCompanyInfo(company, companyInfo))
+                .get();
+    }
+
+    public Company removeCompany(Integer companyId) {
+        Company removeCompany = companyRepository.getCompanies().stream()
+                .filter(company -> company.getCompanyId().equals(companyId))
+                .findFirst().orElse(null);
+        companyRepository.getCompanies().remove(removeCompany);
+        return removeCompany;
+
+    }
+
+    private Company updateCompanyInfo(Company company, Company companyInfo) {
+        if (companyInfo.getCompanyName() != null){
+            company.setCompanyName(companyInfo.getCompanyName());
+        }
+        if (companyInfo.getEmployeesNumber() != null){
+            company.setEmployeesNumber(companyInfo.getEmployeesNumber());
+        }
+        if (!companyInfo.getEmployees().isEmpty() && companyInfo.getEmployees() != null){
+            company.setCompanyEmployees(companyInfo.getEmployees());
+        }
+        return company;
+    }
+
 }

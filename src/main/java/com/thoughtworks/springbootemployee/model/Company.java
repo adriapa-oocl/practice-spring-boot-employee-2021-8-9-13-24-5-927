@@ -1,12 +1,13 @@
 package com.thoughtworks.springbootemployee.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
     private Integer companyId;
     private String companyName;
     private Integer employeesNumber;
-    private List<Employee> companyEmployees;
+    private List<Employee> companyEmployees = new ArrayList<>();
 
     public Company(Integer companyId, String companyName, Integer employeesNumber, List<Employee> companyEmployees) {
         this.companyId = companyId;
