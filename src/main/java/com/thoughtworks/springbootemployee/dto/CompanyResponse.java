@@ -1,6 +1,7 @@
-package com.thoughtworks.springbootemployee.model;
+package com.thoughtworks.springbootemployee.dto;
 
-import javax.persistence.*;
+import com.thoughtworks.springbootemployee.entity.Employee;
+
 import java.util.List;
 
 public class CompanyResponse {

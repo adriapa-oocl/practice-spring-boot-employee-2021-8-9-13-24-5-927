@@ -1,17 +1,15 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
-import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
+import com.thoughtworks.springbootemployee.entity.Employee;
 //import com.thoughtworks.springbootemployee.service.EmployeeService;
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
-import com.thoughtworks.springbootemployee.service.RetiringEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,14 +18,22 @@ public class EmployeesController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    EmployeeMapper employeeMapper;
+
     @GetMapping
     public List<Employee> getAllEmployees(){
         return employeeService.getAllEmployees();
     }
 
+//    @GetMapping(path = "/{employeeId}")
+//    public Employee findById(@PathVariable Integer employeeId){
+//        return employeeService.findById(employeeId);
+//    }
+
     @GetMapping(path = "/{employeeId}")
-    public Employee findById(@PathVariable Integer employeeId){
-        return employeeService.findById(employeeId);
+    public EmployeeResponse findById(@PathVariable Integer employeeId){
+        return employeeMapper.toResponse(employeeService.findById(employeeId));
     }
 
     @GetMapping(params = {"gender"})
@@ -40,10 +46,16 @@ public class EmployeesController {
         return employeeService.getEmployeesByPagination(pageIndex, pageSize);
     }
 
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Employee addEmployee(@RequestBody Employee employeeInfo){
+//        return employeeService.addEmployee(employeeInfo);
+//    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody Employee employeeInfo){
-        return employeeService.addEmployee(employeeInfo);
+    public Employee addEmployee(@RequestBody EmployeeRequest employeeInfo){
+        return employeeService.addEmployee(employeeMapper.toEntity(employeeInfo));
     }
 
     @GetMapping(params = {"minAge", "maxAge"})
@@ -51,9 +63,14 @@ public class EmployeesController {
         return employeeService.getEmployeesByAgeRange(minAge, maxAge);
     }
 
+//    @PutMapping(path = "/{employeeId}")
+//    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeInfo){
+//        return employeeService.updateEmployee(employeeId, employeeInfo);
+//    }
+
     @PutMapping(path = "/{employeeId}")
-    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeInfo){
-        return employeeService.updateEmployee(employeeId, employeeInfo);
+    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeRequest employeeInfo){
+        return employeeService.updateEmployee(employeeId, employeeMapper.toEntity(employeeInfo));
     }
 
     @DeleteMapping(path = "/{employeeId}")

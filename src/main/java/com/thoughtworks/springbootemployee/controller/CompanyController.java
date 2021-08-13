@@ -1,9 +1,11 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
+import com.thoughtworks.springbootemployee.entity.Company;
+import com.thoughtworks.springbootemployee.dto.CompanyRequest;
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
-import com.thoughtworks.springbootemployee.service.RetiringCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,7 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
     @Autowired
-    private RetiringCompanyService retiringCompanyService;
+    private CompanyMapper companyMapper;
 
     @Autowired
     private CompanyService companyService;
@@ -31,9 +33,10 @@ public class CompanyController {
         return companyService.getAllCompanies();
     }
 
+
     @GetMapping(path = "/{companyId}")
-    public Company findById(@PathVariable Integer companyId){
-        return companyService.findById(companyId);
+    public CompanyResponse findById(@PathVariable Integer companyId){
+        return companyMapper.toResponse(companyService.findById(companyId));
     }
 
     @GetMapping(path = "/{companyId}/employees")
@@ -48,13 +51,13 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Company addCompany(@RequestBody Company companyInfo){
-        return companyService.addCompany(companyInfo);
+    public Company addCompany(@RequestBody CompanyRequest companyInfo){
+        return companyService.addCompany(companyMapper.toEntity(companyInfo));
     }
 
     @PutMapping(path = "/{companyId}")
-    public Company updateCompany(@PathVariable Integer companyId, @RequestBody Company companyInfo){
-        return companyService.updateCompany(companyId, companyInfo);
+    public Company updateCompany(@PathVariable Integer companyId, @RequestBody CompanyRequest companyInfo){
+        return companyService.updateCompany(companyId, companyMapper.toEntity(companyInfo));
     }
 
     @DeleteMapping(path = "/{companyId}")
