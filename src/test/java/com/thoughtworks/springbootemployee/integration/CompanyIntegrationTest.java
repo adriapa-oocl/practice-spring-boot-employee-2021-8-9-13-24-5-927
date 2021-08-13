@@ -25,6 +25,6 @@ public class CompanyIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/companies")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(3)));
+                .andExpect(jsonPath("$.*", hasSize(4)));
     }
 }

@@ -111,7 +111,7 @@ public class EmployeeIntegrationTest {
 
     @Test
     void should_return_employee_when_findById_given_employee_id() throws Exception {
-        int id = testEmployees.get(0).getId();
+        int id = 2;
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
@@ -127,7 +127,7 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/employees").param("gender", gender)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(6)));
+                .andExpect(jsonPath("$.*", hasSize(7)));
     }
 
     @Test
