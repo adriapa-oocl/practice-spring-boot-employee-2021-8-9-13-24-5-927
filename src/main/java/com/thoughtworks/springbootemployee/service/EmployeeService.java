@@ -32,7 +32,7 @@ public class EmployeeService {
 
     public Employee findById(Integer employeeId) {
         return employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee id not found"));
+                .orElseThrow(() -> new EmployeeNotFoundException());
     }
 
     public List<Employee> findByGender(String employeeGender) {
@@ -68,6 +68,9 @@ public class EmployeeService {
         }
         if (employeeInfo.getSalary() != null){
             employee.setSalary(employeeInfo.getSalary());
+        }
+        if (employeeInfo.getCompanyId() != null){
+            employee.setCompanyId(employeeInfo.getCompanyId());
         }
         return employee;
     }
