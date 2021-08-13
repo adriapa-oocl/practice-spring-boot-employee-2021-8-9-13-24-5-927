@@ -30,7 +30,7 @@ public class CompanyService {
 
     public Company findById(Integer companyId) {
         return companyRepository.findById(companyId)
-                .orElseThrow(() -> new CompanyNotFoundException("Company id not found"));
+                .orElseThrow(() -> new CompanyNotFoundException());
     }
 
     public List<Company> getCompaniesByPagination(Integer pageIndex, Integer pageSize) {
