@@ -1,14 +1,15 @@
 package com.thoughtworks.springbootemployee.exception;
 
 public class EmployeeNotFoundException extends RuntimeException {
-    private String message;
 
-    public EmployeeNotFoundException(String message) {
-        this.message = message;
-    }
+//    private String message;
+//
+//    public EmployeeNotFoundException(String message){
+//        super(message);
+//    }
 
     @Override
     public String getMessage() {
-        return message;
+        return "Employee id not found";
     }
 }
