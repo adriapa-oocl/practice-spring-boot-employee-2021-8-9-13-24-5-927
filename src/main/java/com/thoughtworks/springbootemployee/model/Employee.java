@@ -63,6 +63,14 @@ public class Employee {
     public void setSalary(Integer salary) {
         this.salary = salary;
     }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
 }
 
 
