@@ -13,13 +13,13 @@ public class GlobalControllerAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler
     public ErrorResponse employeeNotFoundExceptionHandling(EmployeeNotFoundException employeeNotFoundException){
-        return new ErrorResponse(employeeNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        return new ErrorResponse(employeeNotFoundException.getMessage());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler
     public ErrorResponse companyNotFoundExceptionHandling(CompanyNotFoundException companyNotFoundException){
-        return new ErrorResponse(companyNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        return new ErrorResponse(companyNotFoundException.getMessage());
     }
 
 }
