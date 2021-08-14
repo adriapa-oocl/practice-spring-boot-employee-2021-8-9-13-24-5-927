@@ -65,4 +65,7 @@ public class CompanyService {
         return removeCompany.orElse(null);
     }
 
+    public void deleteAll() {
+        companyRepository.deleteAll();
+    }
 }
