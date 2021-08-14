@@ -96,4 +96,17 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.age").value("30"));
     }
 
+    @Test
+    void should_remove_when_removeEmployee_given_employee_id() throws Exception {
+        //given
+        final Employee employee = new Employee(95, "Joanna", 25, "female", 1000);
+        final Employee savedEmployee = employeeService.addEmployee(employee);
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", savedEmployee.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
 }
