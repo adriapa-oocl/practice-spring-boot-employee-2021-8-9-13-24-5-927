@@ -1,10 +1,9 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
-import com.thoughtworks.springbootemployee.entity.Employee;
-//import com.thoughtworks.springbootemployee.service.EmployeeService;
 import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
+import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,14 +21,9 @@ public class EmployeesController {
     EmployeeMapper employeeMapper;
 
     @GetMapping
-    public List<Employee> getAllEmployees(){
-        return employeeService.getAllEmployees();
+    public List<EmployeeResponse> getAllEmployees(){
+        return employeeMapper.toResponseList(employeeService.getAllEmployees());
     }
-
-//    @GetMapping(path = "/{employeeId}")
-//    public Employee findById(@PathVariable Integer employeeId){
-//        return employeeService.findById(employeeId);
-//    }
 
     @GetMapping(path = "/{employeeId}")
     public EmployeeResponse findById(@PathVariable Integer employeeId){
@@ -46,16 +40,11 @@ public class EmployeesController {
         return employeeService.getEmployeesByPagination(pageIndex, pageSize);
     }
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Employee addEmployee(@RequestBody Employee employeeInfo){
-//        return employeeService.addEmployee(employeeInfo);
-//    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody EmployeeRequest employeeInfo){
-        return employeeService.addEmployee(employeeMapper.toEntity(employeeInfo));
+    public EmployeeResponse addEmployee(@RequestBody EmployeeRequest employeeRequest){
+        final Employee employee = employeeService.addEmployee(employeeMapper.toEntity(employeeRequest));
+        return employeeMapper.toResponse(employee);
     }
 
     @GetMapping(params = {"minAge", "maxAge"})
@@ -63,14 +52,10 @@ public class EmployeesController {
         return employeeService.getEmployeesByAgeRange(minAge, maxAge);
     }
 
-//    @PutMapping(path = "/{employeeId}")
-//    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeInfo){
-//        return employeeService.updateEmployee(employeeId, employeeInfo);
-//    }
-
     @PutMapping(path = "/{employeeId}")
-    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeRequest employeeInfo){
-        return employeeService.updateEmployee(employeeId, employeeMapper.toEntity(employeeInfo));
+    public EmployeeResponse updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeRequest employeeRequest){
+        Employee updateEmployee = employeeService.updateEmployee(employeeId, employeeMapper.toEntity(employeeRequest));
+        return employeeMapper.toResponse(updateEmployee);
     }
 
     @DeleteMapping(path = "/{employeeId}")

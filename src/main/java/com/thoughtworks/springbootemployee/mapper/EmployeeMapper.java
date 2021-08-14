@@ -6,6 +6,10 @@ import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class EmployeeMapper {
     public Employee toEntity(EmployeeRequest employeeRequest){
@@ -21,4 +25,12 @@ public class EmployeeMapper {
 
         return employeeResponse;
     }
+
+    public List<EmployeeResponse> toResponseList(List<Employee> employeeList){
+        return employeeList
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
 }
