@@ -76,4 +76,8 @@ public class EmployeeService {
         return employeeRepository.findAll(PageRequest.of(pageIndex-1,pageSize)).getContent();
     }
 
+    public void deleteAll(){
+        employeeRepository.deleteAll();
+    }
+
 }
