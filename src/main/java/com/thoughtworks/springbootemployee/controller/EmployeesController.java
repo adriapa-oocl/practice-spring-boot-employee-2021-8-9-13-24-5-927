@@ -43,7 +43,7 @@ public class EmployeesController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EmployeeResponse addEmployee(@RequestBody EmployeeRequest employeeRequest){
-        final Employee employee = employeeService.addEmployee(employeeMapper.toEntity(employeeRequest));
+        Employee employee = employeeService.addEmployee(employeeMapper.toEntity(employeeRequest));
         return employeeMapper.toResponse(employee);
     }
 
@@ -59,8 +59,8 @@ public class EmployeesController {
     }
 
     @DeleteMapping(path = "/{employeeId}")
-    public Employee deleteEmployee(@PathVariable Integer employeeId){
-        return employeeService.removeEmployee(employeeId);
+    public EmployeeResponse deleteEmployee(@PathVariable Integer employeeId){
+        return employeeMapper.toResponse(employeeService.removeEmployee(employeeId));
     }
 
 }
