@@ -112,4 +112,17 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.salary").value(10000));
     }
 
+    @Test
+    void should_return_employees_when_findByGender_given_employee_gender() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees").param("gender", "female")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(1)));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees").param("gender", "male")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(7)));
+    }
+
 }
