@@ -78,4 +78,22 @@ public class EmployeeIntegrationTest {
 
     }
 
+    @Test
+    void should_update_when_updateEmployee_given_employee_information() throws Exception {
+        //given
+        final Employee employee = new Employee(95, "Will", 30, "27", 1000);
+        final Employee savedEmployee = employeeService.addEmployee(employee);
+        String newEmployeeInfo = "{\n" +
+                "    \"age\": 30\n" +
+                "}";
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", savedEmployee.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newEmployeeInfo))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Will"))
+                .andExpect(jsonPath("$.age").value("30"));
+    }
+
 }
