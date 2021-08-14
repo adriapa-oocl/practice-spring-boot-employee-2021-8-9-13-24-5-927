@@ -56,4 +56,26 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[7].name").value("Cedie"));
     }
 
+    @Test
+    void should_create_when_addEmployee_given_employee_information() throws Exception {
+        //given
+        String employee = "{\n" +
+                "    \"id\": 9,\n" +
+                "    \"name\": \"Joanna\",\n" +
+                "    \"age\": 20,\n" +
+                "    \"gender\": \"female\",\n" +
+                "    \"salary\": 10000\n" +
+                "}";
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.post("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employee))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("Joanna"))
+                .andExpect(jsonPath("$.gender").value("female"))
+                .andExpect(jsonPath("$.salary").value("10000"));
+
+    }
+
 }
