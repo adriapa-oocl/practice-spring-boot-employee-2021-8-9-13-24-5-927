@@ -125,4 +125,13 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.*", hasSize(7)));
     }
 
+    @Test
+    void should_return_three_employee_per_list_when_getListByPagination_given_pageIndex_is_1_and_pageSize_is_3() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
+                .param("pageIndex", "1").param("pageSize", "3")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(3)));
+    }
+
 }
