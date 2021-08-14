@@ -48,7 +48,6 @@ public class EmployeeIntegrationTest {
 
     @Test
     void should_return_all_employees_when_getAllEmployees() throws Exception {
-        //when
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[*]").isNotEmpty())
@@ -58,7 +57,6 @@ public class EmployeeIntegrationTest {
 
     @Test
     void should_create_when_addEmployee_given_employee_information() throws Exception {
-        //given
         String employee = "{\n" +
                 "    \"id\": 9,\n" +
                 "    \"name\": \"Joanna\",\n" +
@@ -67,7 +65,6 @@ public class EmployeeIntegrationTest {
                 "    \"salary\": 10000\n" +
                 "}";
 
-        //when
         mockMvc.perform(MockMvcRequestBuilders.post("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employee))
@@ -80,33 +77,39 @@ public class EmployeeIntegrationTest {
 
     @Test
     void should_update_when_updateEmployee_given_employee_information() throws Exception {
-        //given
-        final Employee employee = new Employee(95, "Will", 30, "27", 1000);
+        final Employee employee = new Employee(95, "Will", 30, "30", 1000);
         final Employee savedEmployee = employeeService.addEmployee(employee);
         String newEmployeeInfo = "{\n" +
-                "    \"age\": 30\n" +
+                "    \"age\": 27\n" +
                 "}";
 
-        //when
         mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", savedEmployee.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(newEmployeeInfo))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Will"))
-                .andExpect(jsonPath("$.age").value("30"));
+                .andExpect(jsonPath("$.age").value("27"));
     }
 
     @Test
     void should_remove_when_removeEmployee_given_employee_id() throws Exception {
-        //given
         final Employee employee = new Employee(95, "Joanna", 25, "female", 1000);
         final Employee savedEmployee = employeeService.addEmployee(employee);
 
-        //when
         mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", savedEmployee.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void should_return_employee_when_findById_given_employee_id() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", 2))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Lara"))
+                .andExpect(jsonPath("$.age").value(21))
+                .andExpect(jsonPath("$.gender").value("female"))
+                .andExpect(jsonPath("$.salary").value(10000));
     }
 
 }
