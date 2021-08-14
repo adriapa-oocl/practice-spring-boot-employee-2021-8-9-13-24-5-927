@@ -31,8 +31,8 @@ public class EmployeesController {
     }
 
     @GetMapping(params = {"gender"})
-    public List<Employee> findByGender(@RequestParam("gender") String employeeGender){
-        return employeeService.findByGender(employeeGender);
+    public List<EmployeeResponse> findByGender(@RequestParam("gender") String employeeGender){
+        return employeeMapper.toResponseList(employeeService.findByGender(employeeGender));
     }
 
     @GetMapping(params = {"pageIndex", "pageSize"})
